@@ -1,5 +1,7 @@
 package facades;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.*;
@@ -22,6 +24,7 @@ public class JourneyFacadeTest {
 
     private static EntityManagerFactory emf;
     private static JourneyFacade journeyFacade;
+
 
     User u1;
     Profile p1;
