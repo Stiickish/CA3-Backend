@@ -106,4 +106,8 @@ public class Profile {
         this.journeys = journeys;
     }
 
+    public  void addJourney(Journey journey) {
+        this.journeys.add(journey);
+        journey.setProfile(this);
+    }
 }

@@ -10,13 +10,13 @@ import java.util.Set;
  * A DTO for the {@link entities.User} entity
  */
 public class UserDto implements Serializable {
-    private final Integer id;
+    private  Integer id;
     @Size(max = 25)
     @NotNull
-    private final String userName;
+    private  String userName;
     @Size(max = 255)
-    private final String userPass;
-    private final Set<RoleDto1> roles;
+    private  String userPass;
+    private  Set<RoleDto1> roles;
 
     public UserDto(Integer id, String userName, String userPass, Set<RoleDto1> roles) {
         this.id = id;
@@ -70,10 +70,10 @@ public class UserDto implements Serializable {
      * A DTO for the {@link entities.Role} entity
      */
     public static class RoleDto1 implements Serializable {
-        private final Integer id;
+        private  Integer id;
         @Size(max = 20)
         @NotNull
-        private final String roleName;
+        private  String roleName;
 
         public RoleDto1(Integer id, String roleName) {
             this.id = id;

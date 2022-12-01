@@ -82,7 +82,9 @@ public class JourneyResourceTest {
         f1 = new Fuel("Rugbrødsmotor");
         transportation1 = new Transportation("Løb");
         jt1 = new JourneyType("Recurring");
-        j1 = new Journey("Work", LocalDate.of(2022,11,10),200F, 20F, 2F, jt1);
+        j1 = new Journey("Work", LocalDate.of(2022,1,1),200F, 20F, 2F, jt1);
+        //j1 = new Journey("Work",200F, 20F, 2F, jt1);
+
         // j2 = new Journey("Home", LocalDate.of(2022,11,10),trip1.getEmission(),trip1.getDistance(),trip1.getCost(), jt1);
         LinkedHashSet journeys = new LinkedHashSet<Journey>();
         journeys.add(j1);
@@ -137,6 +139,7 @@ public class JourneyResourceTest {
                 .get("/journey/{id}", j1.getId())
                 .then()
                 .assertThat()
+                .statusCode(200)
                 .body("id", equalTo(j1.getId()));
     }
 

@@ -56,18 +56,13 @@ public class JourneyFacadeTest {
         transportation1 = new Transportation("Løb");
         jt1 = new JourneyType("Recurring");
         j1 = new Journey("Work", LocalDate.of(2022,11,10),200F, 20F, 2F, jt1);
-        LinkedHashSet journeys = new LinkedHashSet<Journey>();
-        journeys.add(j1);
         t1 = new Trip(22.5F, 2600F, 0F, j1,f1,transportation1);
-        LinkedHashSet trips = new LinkedHashSet<JourneyDto.TripDto>();
-        trips.add(t1);
-
-
+        j1.addTrip(t1);
 
         j1.setProfile(p1);
         journeyProfileDto = new JourneyDto.ProfileDto(p1);
         journeyJourneyTypeDto = new JourneyDto.JourneyTypeDto(jt1);
-        p1.setJourneys(journeys);
+        p1.addJourney(j1);
 
         try {
             em.getTransaction().begin();
@@ -113,7 +108,7 @@ public class JourneyFacadeTest {
     void getJourneyById () {
         JourneyDto result = journeyFacade.getJourneyById(j1.getId());
 
-        assertEquals(j1.getJourneyType(), result.getJourneyType());
+        assertEquals(j1.getName(), result.getName());
     }
 
 }

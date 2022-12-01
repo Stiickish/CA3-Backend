@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.JourneyDto;
 import dtos.ProfileDto;
+import entities.Journey;
 import facades.JourneyFacade;
 import facades.ProfileFacade;
 import utils.EMF_Creator;
@@ -55,7 +56,8 @@ public class JourneyRescource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJourneyById(@PathParam("id") int id){
-        return Response.ok().entity(GSON.toJson(FACADE.getJourneyById(id))).build();
+        JourneyDto facadeJourney = FACADE.getJourneyById(id);
+        return Response.ok().entity(GSON.toJson(facadeJourney)).build();
     }
 
     @PUT

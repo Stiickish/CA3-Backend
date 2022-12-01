@@ -9,10 +9,10 @@ import java.util.Objects;
  * A DTO for the {@link entities.Fuel} entity
  */
 public class FuelDto implements Serializable {
-    private final Integer id;
+    private  Integer id;
     @Size(max = 45)
     @NotNull
-    private final String name;
+    private  String name;
 
     public FuelDto(Integer id, String name) {
         this.id = id;

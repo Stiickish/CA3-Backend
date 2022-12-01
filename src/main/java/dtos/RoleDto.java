@@ -9,10 +9,10 @@ import java.util.Objects;
  * A DTO for the {@link entities.Role} entity
  */
 public class RoleDto implements Serializable {
-    private final Integer id;
+    private  Integer id;
     @Size(max = 20)
     @NotNull
-    private final String roleName;
+    private  String roleName;
 
     public RoleDto(Integer id, String roleName) {
         this.id = id;
