@@ -6,13 +6,9 @@ import dtos.CarTravelDTO;
 import dtos.EmissionDto;
 import dtos.JourneyDto;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
+;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
