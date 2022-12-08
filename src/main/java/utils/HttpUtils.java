@@ -6,6 +6,18 @@ import dtos.JourneyDto;
 
 import java.io.IOException;
 
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Random;
+
+
 public class HttpUtils {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -32,6 +44,9 @@ return null;
     }
 
     public static JourneyDto.TripDto getEmission(JourneyDto.TripDto tripDto) throws IOException {
+
+        Random random = new Random();
+
         /*String apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMjUzMGM4ZmIyMTdlYmJiYjg3ZjgwMDdjNDZjYTc5ODMwZjQxNzgzZDVhZTExNTUwMTA4ODdjMzY1NGRlMWNiNDI4YTc2ZGNmMjM3YWFlMGUiLCJpYXQiOjE2NjkzNzA5OTYsIm5iZiI6MTY2OTM3MDk5NiwiZXhwIjoxNzAwOTA2OTk2LCJzdWIiOiIyMzI0Iiwic2NvcGVzIjpbXX0.Ot63eEC6iCdCaea2TKX7DlMgvCpKGM8CfBuMSGivsTOUVerSUyQGUR-SA5e2-5ffN0ATmMavvFtK0f6SgCfETg";
 
         URL url = new URL("https://app.trycarbonapi.com/api/carTravel");
@@ -61,14 +76,8 @@ return null;
             return GSON.fromJson(response.toString(), EmissionDto.class);
         }*/
 
-        if(tripDto.getTransportation().getId() == 1)
-        {
-            tripDto.setEmission(40.3f);
-        }
-        else
-        {
-            tripDto.setEmission(16.9f);
-        }
+            tripDto.setEmission(random.nextFloat());
+
 
         return tripDto;
     }

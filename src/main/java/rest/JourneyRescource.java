@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.Journey;
+import facades.CalculationFacade;
 import facades.JourneyFacade;
 import facades.ProfileFacade;
 import utils.EMF_Creator;
@@ -17,6 +18,8 @@ import javax.ws.rs.core.*;
 public class JourneyRescource {
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final JourneyFacade FACADE =  JourneyFacade.getInstance(EMF);
+    private static final CalculationFacade CALCULATION_FACADE =  CalculationFacade.getInstance(EMF);
+
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
@@ -28,10 +31,22 @@ public class JourneyRescource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createJourney(String content) throws Exception {
+    public Response createJourney(String content) {
         JourneyDto journeyDtoFromJSON = GSON.fromJson(content, JourneyDto.class);
         System.out.println(journeyDtoFromJSON);
         JourneyDto journeyDto = FACADE.createJourney(journeyDtoFromJSON);
+
+        return Response.ok().entity(GSON.toJson(journeyDto)).build();
+    }
+
+    @POST
+    @Path("anonymous")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createAnonymousJourney(String content) throws Exception {
+        JourneyDto journeyDtoFromJSON = GSON.fromJson(content, JourneyDto.class);
+        System.out.println(journeyDtoFromJSON);
+        JourneyDto journeyDto = CALCULATION_FACADE.calculateJourney(journeyDtoFromJSON);
 
         return Response.ok().entity(GSON.toJson(journeyDto)).build();
     }
