@@ -32,9 +32,10 @@ public class JourneyRescource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createJourney(String content) {
+        System.out.println(content);
         JourneyDto journeyDtoFromJSON = GSON.fromJson(content, JourneyDto.class);
-        System.out.println(journeyDtoFromJSON);
         JourneyDto journeyDto = FACADE.createJourney(journeyDtoFromJSON);
+        //System.out.println(journeyDtoFromJSON);
 
         return Response.ok().entity(GSON.toJson(journeyDto)).build();
     }
@@ -45,7 +46,6 @@ public class JourneyRescource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAnonymousJourney(String content) throws Exception {
         JourneyDto journeyDtoFromJSON = GSON.fromJson(content, JourneyDto.class);
-        System.out.println(journeyDtoFromJSON);
         JourneyDto journeyDto = CALCULATION_FACADE.calculateJourney(journeyDtoFromJSON);
 
         return Response.ok().entity(GSON.toJson(journeyDto)).build();
