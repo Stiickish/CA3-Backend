@@ -21,7 +21,7 @@ public class CalculationFacade {
 
     }
 
-    public static CalculationFacade getCalculationFacade(EntityManagerFactory _emf) {
+    public static CalculationFacade getInstance(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new CalculationFacade();
@@ -37,20 +37,16 @@ public class CalculationFacade {
         return null;
     }
 
-    public JourneyDto getJourney(JourneyDto journeyDto) throws IOException {
+    public JourneyDto calculateJourney(JourneyDto journeyDto) throws IOException {
+        if(journeyDto.getTrips() == null)
+        {
+            return journeyDto;
+        }
+
         for(JourneyDto.TripDto tripDto : journeyDto.getTrips()){
             tripDto = HttpUtils.getEmission(tripDto);
             journeyDto.setTotalEmission(journeyDto.getTotalEmission() + tripDto.getEmission());
             journeyDto.setTotalDistance(journeyDto.getTotalDistance() + tripDto.getDistance());
-        }
-
-        if(journeyDto.getId() != null)
-        {
-            journeyFacade.updateJourney(journeyDto);
-        }
-        else
-        {
-            journeyFacade.createJourney(journeyDto);
         }
 
         return journeyDto;

@@ -2,9 +2,6 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.CarTravelDTO;
-import dtos.CombinedTransportTypeDTO;
-import dtos.PublicTransitDTO;
 import facades.CalculationFacade;
 import utils.EMF_Creator;
 
@@ -19,7 +16,7 @@ public class CalculationResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
 
-    private static final CalculationFacade FACADE = CalculationFacade.getCalculationFacade(EMF);
+    private static final CalculationFacade FACADE = CalculationFacade.getInstance(EMF);
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 

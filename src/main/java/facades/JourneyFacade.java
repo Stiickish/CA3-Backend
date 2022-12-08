@@ -1,19 +1,23 @@
 package facades;
 
+import com.mysql.cj.log.Log;
 import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.Journey;
 import entities.JourneyType;
 import entities.Profile;
 import entities.Trip;
+import rest.CalculationResource;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.io.IOException;
 
 public class JourneyFacade {
 
     private static EntityManagerFactory emf;
     private static JourneyFacade instance;
+    private CalculationFacade calculationFacade;
 
     public JourneyFacade() {
     }
@@ -27,7 +31,15 @@ public class JourneyFacade {
 
     public JourneyDto createJourney (JourneyDto journeyDto) {
         EntityManager em = emf.createEntityManager();
+        calculationFacade = CalculationFacade.getInstance(emf);
 
+        try {
+        calculationFacade.calculateJourney(journeyDto);
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+        }
         Profile profile = em.find(Profile.class, journeyDto.getProfile().getId());
         Journey journey = new Journey(journeyDto);
         journey.setProfile(profile);
@@ -76,6 +88,15 @@ public class JourneyFacade {
 
     public JourneyDto updateJourney (JourneyDto journeyDto) {
         EntityManager em = emf.createEntityManager();
+        calculationFacade = CalculationFacade.getInstance(emf);
+        try {
+            calculationFacade.calculateJourney(journeyDto);
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+        }
+
         Profile profile = em.find(Profile.class, journeyDto.getProfile().getId());
         JourneyType type = em.find(JourneyType.class, journeyDto.getJourneyType().getId());
         Journey journey = new Journey(journeyDto);
