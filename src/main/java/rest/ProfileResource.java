@@ -31,7 +31,7 @@ public class ProfileResource {
         ProfileDto profileDtoFromJSON = GSON.fromJson(content, ProfileDto.class);
         System.out.println(profileDtoFromJSON);
          ProfileDto profileDto = FACADE.createProfile(profileDtoFromJSON);
-        System.out.println();
+
          return Response.ok().entity(GSON.toJson(profileDto)).build();
     }
 
