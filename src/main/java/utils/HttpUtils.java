@@ -2,17 +2,9 @@ package utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.CarTravelDTO;
-import dtos.EmissionDto;
 import dtos.JourneyDto;
 
 import java.io.IOException;
-import java.net.URI;
-;
-
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 public class HttpUtils {
 
@@ -20,7 +12,7 @@ public class HttpUtils {
 
     public static String fetchAPIData(String _url, String apiKey) {
 
-        HttpClient client = HttpClient.newHttpClient();
+/*        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(_url))
                 .GET()
@@ -35,8 +27,8 @@ public class HttpUtils {
             return response.body();
         } catch (IOException | InterruptedException exception) {
             throw new RuntimeException(exception);
-        }
-
+        }*/
+return null;
     }
 
     public static JourneyDto.TripDto getEmission(JourneyDto.TripDto tripDto) throws IOException {
