@@ -38,7 +38,7 @@ public class Trip {
     private Fuel fuel;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "transportation_id", nullable = false)
     private Transportation transportation;
 

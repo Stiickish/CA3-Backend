@@ -3,10 +3,7 @@ package facades;
 import com.mysql.cj.log.Log;
 import dtos.JourneyDto;
 import dtos.ProfileDto;
-import entities.Journey;
-import entities.JourneyType;
-import entities.Profile;
-import entities.Trip;
+import entities.*;
 import rest.CalculationResource;
 
 import javax.persistence.EntityManager;
@@ -42,6 +39,12 @@ public class JourneyFacade {
         }
         Profile profile = em.find(Profile.class, journeyDto.getProfile().getId());
         Journey journey = new Journey(journeyDto);
+        for (Trip trip : journey.getTrips()) {
+            Transportation transportation = em.find(Transportation.class, trip.getTransportation().getId());
+            trip.setTransportation(transportation);
+            transportation.getTrips().add(trip);
+            trip.setJourney(journey);
+        }
         journey.setProfile(profile);
         profile.getJourneys().add(journey);
 
