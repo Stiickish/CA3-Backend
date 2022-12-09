@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dtos.CarTravelDTO;
+import dtos.FuelDto;
 import dtos.JourneyDto;
+import dtos.TransportationDto;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -51,27 +53,37 @@ public class HttpUtils {
 
         String distance = tripDto.getDistance().toString();
         String vehicle = tripDto.getTransportation().getName();
-        HashMap<String, String> carbonMaster2000;
+        HashMap<String, String> carbonMaster2000 = new HashMap<>();
+        carbonMaster2000.put("API_KEY", apiKey);
+        carbonMaster2000.put("distance", distance);
+        carbonMaster2000.put("vehicle", vehicle);
 
 
-        performPostCall("https://app.trycarbonapi.com/api/carTravel", );
-
-        }
-
-       //CarTravelDTO carTravelDTO = new CarTravelDTO(tripDto.getDistance(), tripDto.getTransportation().getName());
-
-        /*JsonObject responseJson = new JsonObject();
-        responseJson.addProperty("distance",tripDto.getDistance());
-        responseJson.addProperty("vehicle", tripDto.getTransportation().getName());*/
-
-
-
-
+        performPostCall("https://app.trycarbonapi.com/api/carTravel", carbonMaster2000);
 
         return tripDto;
+        }
+
+    public static void main(String[] args) throws MalformedURLException {
+
+
+        String apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMjUzMGM4ZmIyMTdlYmJiYjg3ZjgwMDdjNDZjYTc5ODMwZjQxNzgzZDVhZTExNTUwMTA4ODdjMzY1NGRlMWNiNDI4YTc2ZGNmMjM3YWFlMGUiLCJpYXQiOjE2NjkzNzA5OTYsIm5iZiI6MTY2OTM3MDk5NiwiZXhwIjoxNzAwOTA2OTk2LCJzdWIiOiIyMzI0Iiwic2NvcGVzIjpbXX0.Ot63eEC6iCdCaea2TKX7DlMgvCpKGM8CfBuMSGivsTOUVerSUyQGUR-SA5e2-5ffN0ATmMavvFtK0f6SgCfETg";
+
+        JourneyDto.TripDto.TransportationDto transportationDto = new JourneyDto.TripDto.TransportationDto(1,"SmallDieselCar");
+        JourneyDto.TripDto.FuelDto1 fuelDto = new JourneyDto.TripDto.FuelDto1(1, "Diesel");
+        JourneyDto.TripDto tripDto = new JourneyDto.TripDto(1,80f,0f,0f,fuelDto,transportationDto);
+
+        String distance = tripDto.getDistance().toString();
+        String vehicle = tripDto.getTransportation().getName();
+        HashMap<String, String> carbonMaster2000 = new HashMap<>();
+        carbonMaster2000.put("API_KEY", apiKey);
+        carbonMaster2000.put("distance", distance);
+        carbonMaster2000.put("vehicle", vehicle);
+        System.out.println(carbonMaster2000);
+        //System.out.println(performPostCall(apiKey,carbonMaster2000 ));
     }
 
-    public String  performPostCall(String requestURL, HashMap<String, String> postDataParams) throws MalformedURLException {
+    public static String  performPostCall(String requestURL, HashMap<String, String> postDataParams) throws MalformedURLException {
 
         URL url;
         String response = "";
