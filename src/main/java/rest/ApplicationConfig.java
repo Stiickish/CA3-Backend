@@ -31,11 +31,11 @@ public class ApplicationConfig extends Application {
         resources.add(security.RolesAllowedFilter.class);
         resources.add(security.errorhandling.AuthenticationExceptionMapper.class);
         resources.add(security.errorhandling.NotAuthorizedExceptionMapper.class);
-        resources.add(ProfileResource.class);
-        resources.add(TransportationTypeResource.class);
-        resources.add(FuelResource.class);
-        resources.add(JourneyTypeResource.class);
-        resources.add(JourneyRescource.class);
+        resources.add(rest.ProfileResource.class);
+        resources.add(rest.TransportationTypeResource.class);
+        resources.add(rest.FuelResource.class);
+        resources.add(rest.JourneyTypeResource.class);
+        resources.add(rest.JourneyRescource.class);
     }
     
 }
