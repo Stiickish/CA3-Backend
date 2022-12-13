@@ -44,7 +44,7 @@ public class CalculationFacade {
         }
 
         for(JourneyDto.TripDto tripDto : journeyDto.getTrips()){
-            tripDto = HttpUtils.getEmission(tripDto);
+           // tripDto = HttpUtils.getEmission(tripDto);
             journeyDto.setTotalEmission(journeyDto.getTotalEmission() + tripDto.getEmission());
             journeyDto.setTotalDistance(journeyDto.getTotalDistance() + tripDto.getDistance());
         }

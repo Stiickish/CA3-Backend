@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
 
 public class HttpUtils {
 
@@ -19,17 +20,27 @@ public class HttpUtils {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
-    public static JourneyDto.TripDto getEmission(JourneyDto.TripDto tripDto) {
 
-        return null;
+    public static HashMap<String, String> getEmission(JourneyDto.TripDto tripDto) {
+
+
+        HashMap<String, String> values = new HashMap<>();
+        values.put("distance", tripDto.getDistance().toString());
+        values.put("vehicle", tripDto.getTransportation().getName());
+
+
+        return values;
     }
 
+    private void sendPost(JourneyDto.TripDto tripDto) throws Exception {
 
-    private void sendPost() throws Exception {
+
+        String distance = tripDto.getDistance().toString();
+        String vehicle = tripDto.getTransportation().getName();
 
         RequestBody formBody = new FormBody.Builder()
-                .add("distance", "80")
-                .add("vehicle", "SmallDieselCar")
+                .add("distance", distance)
+                .add("vehicle", vehicle)
                 .build();
 
         MediaType mediaType = MediaType.parse("text/plain");
@@ -76,6 +87,7 @@ public class HttpUtils {
     public static void main(String[] args) throws Exception {
 
         HttpUtils instance = new HttpUtils();
+
 
         System.out.println("Testing 1 - Send Http POST request");
         instance.sendPost();

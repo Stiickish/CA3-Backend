@@ -341,6 +341,7 @@ public class JourneyDto implements Serializable {
             this.transportation = new TransportationDto(trip.getTransportation());
         }
 
+
         public Integer getId() {
             return id;
         }
