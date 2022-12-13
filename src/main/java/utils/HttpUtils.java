@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.JourneyDto;
 import okhttp3.*;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,9 +17,8 @@ import java.util.HashMap;
 
 public class HttpUtils {
 
-    private final OkHttpClient httpClient = new OkHttpClient();
+    private static final OkHttpClient httpClient = new OkHttpClient();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
 
 
     public static HashMap<String, String> getEmission(JourneyDto.TripDto tripDto) {
@@ -32,8 +32,7 @@ public class HttpUtils {
         return values;
     }
 
-    private void sendPost(JourneyDto.TripDto tripDto) throws Exception {
-
+    public static JourneyDto.TripDto sendPost(JourneyDto.TripDto tripDto) throws Exception {
 
         String distance = tripDto.getDistance().toString();
         String vehicle = tripDto.getTransportation().getName();
@@ -59,9 +58,17 @@ public class HttpUtils {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
             // Get response body
-            System.out.println(response.body().string());
+            //System.out.println(response.body().string());
+            String str = response.body().string();
+            String emission = str.substring(str.lastIndexOf("n")+4,str.lastIndexOf("k"));
+            float floatValue = Float.parseFloat(emission);
+            System.out.println(floatValue);
+
+            tripDto.setEmission(floatValue);
+
         }
 
+        return tripDto;
     }
 
     public static String fetchAPIData(String _url, String apiKey) {
@@ -85,7 +92,7 @@ public class HttpUtils {
 
     }
 
-   /* public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
         HttpUtils instance = new HttpUtils();
         JourneyDto.TripDto.TransportationDto transportationDto = new JourneyDto.TripDto.TransportationDto(1, "SmallDieselCar");
@@ -94,5 +101,5 @@ public class HttpUtils {
         System.out.println("Testing 1 - Send Http POST request");
         instance.sendPost(tripDto);
 
-    }*/
+    }
 }

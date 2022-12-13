@@ -33,7 +33,7 @@ public class JourneyFacade {
         try {
         calculationFacade.calculateJourney(journeyDto);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             System.out.println(e);
         }
@@ -90,6 +90,8 @@ public class JourneyFacade {
         catch (IOException e)
         {
             System.out.println(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         Profile profile = em.find(Profile.class, journeyDto.getProfile().getId());
