@@ -38,6 +38,7 @@ public class CalculationFacade {
     }
 */
     public JourneyDto calculateJourney(JourneyDto journeyDto) throws IOException {
+
         Float newTotalEmission = 0f;
         Float newTotalDistance = 0f;
 
