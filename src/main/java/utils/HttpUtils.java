@@ -1,30 +1,56 @@
+
 package utils;
+
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import dtos.CarTravelDTO;
-import dtos.FuelDto;
 import dtos.JourneyDto;
-import dtos.TransportationDto;
+import okhttp3.*;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.*;
-
-import java.net.*;
-
+import java.io.IOException;
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 
 public class HttpUtils {
 
+    private final OkHttpClient httpClient = new OkHttpClient();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
+
+    public static JourneyDto.TripDto getEmission(JourneyDto.TripDto tripDto) {
+
+        return null;
+    }
+
+
+    private void sendPost() throws Exception {
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("distance", "80")
+                .add("vehicle", "SmallDieselCar")
+                .build();
+
+        MediaType mediaType = MediaType.parse("text/plain");
+        RequestBody body = RequestBody.create(mediaType, "");
+        Request request = new Request.Builder()
+
+                .url("https://app.trycarbonapi.com/api/carTravel?distance=80&vehicle=SmallDieselCar")
+                .method("POST", body)
+                .addHeader("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMjUzMGM4ZmIyMTdlYmJiYjg3ZjgwMDdjNDZjYTc5ODMwZjQxNzgzZDVhZTExNTUwMTA4ODdjMzY1NGRlMWNiNDI4YTc2ZGNmMjM3YWFlMGUiLCJpYXQiOjE2NjkzNzA5OTYsIm5iZiI6MTY2OTM3MDk5NiwiZXhwIjoxNzAwOTA2OTk2LCJzdWIiOiIyMzI0Iiwic2NvcGVzIjpbXX0.Ot63eEC6iCdCaea2TKX7DlMgvCpKGM8CfBuMSGivsTOUVerSUyQGUR-SA5e2-5ffN0ATmMavvFtK0f6SgCfETg")
+                .addHeader("Cookie", "Cookie_1=value")
+                .build();
+
+        try (Response response = httpClient.newCall(request).execute()) {
+
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+            // Get response body
+            System.out.println(response.body().string());
+        }
+
+    }
 
     public static String fetchAPIData(String _url, String apiKey) {
 
@@ -47,101 +73,12 @@ public class HttpUtils {
 
     }
 
-    public static JourneyDto.TripDto getEmission(JourneyDto.TripDto tripDto) throws IOException {
+    public static void main(String[] args) throws Exception {
 
-        String apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMjUzMGM4ZmIyMTdlYmJiYjg3ZjgwMDdjNDZjYTc5ODMwZjQxNzgzZDVhZTExNTUwMTA4ODdjMzY1NGRlMWNiNDI4YTc2ZGNmMjM3YWFlMGUiLCJpYXQiOjE2NjkzNzA5OTYsIm5iZiI6MTY2OTM3MDk5NiwiZXhwIjoxNzAwOTA2OTk2LCJzdWIiOiIyMzI0Iiwic2NvcGVzIjpbXX0.Ot63eEC6iCdCaea2TKX7DlMgvCpKGM8CfBuMSGivsTOUVerSUyQGUR-SA5e2-5ffN0ATmMavvFtK0f6SgCfETg";
+        HttpUtils instance = new HttpUtils();
 
-        String distance = tripDto.getDistance().toString();
-        String vehicle = tripDto.getTransportation().getName();
-        HashMap<String, String> carbonMaster2000 = new HashMap<>();
-        carbonMaster2000.put("API_KEY", apiKey);
-        carbonMaster2000.put("distance", distance);
-        carbonMaster2000.put("vehicle", vehicle);
+        System.out.println("Testing 1 - Send Http POST request");
+        instance.sendPost();
 
-
-        performPostCall("https://app.trycarbonapi.com/api/carTravel", carbonMaster2000);
-
-        return tripDto;
-        }
-
-    public static void main(String[] args) throws MalformedURLException {
-
-
-        String apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMjUzMGM4ZmIyMTdlYmJiYjg3ZjgwMDdjNDZjYTc5ODMwZjQxNzgzZDVhZTExNTUwMTA4ODdjMzY1NGRlMWNiNDI4YTc2ZGNmMjM3YWFlMGUiLCJpYXQiOjE2NjkzNzA5OTYsIm5iZiI6MTY2OTM3MDk5NiwiZXhwIjoxNzAwOTA2OTk2LCJzdWIiOiIyMzI0Iiwic2NvcGVzIjpbXX0.Ot63eEC6iCdCaea2TKX7DlMgvCpKGM8CfBuMSGivsTOUVerSUyQGUR-SA5e2-5ffN0ATmMavvFtK0f6SgCfETg";
-
-        JourneyDto.TripDto.TransportationDto transportationDto = new JourneyDto.TripDto.TransportationDto(1,"SmallDieselCar");
-        JourneyDto.TripDto.FuelDto1 fuelDto = new JourneyDto.TripDto.FuelDto1(1, "Diesel");
-        JourneyDto.TripDto tripDto = new JourneyDto.TripDto(1,80f,0f,0f,fuelDto,transportationDto);
-
-        String distance = tripDto.getDistance().toString();
-        String vehicle = tripDto.getTransportation().getName();
-        HashMap<String, String> carbonMaster2000 = new HashMap<>();
-        carbonMaster2000.put("API_KEY", apiKey);
-        carbonMaster2000.put("distance", distance);
-        carbonMaster2000.put("vehicle", vehicle);
-        System.out.println(carbonMaster2000);
-        //System.out.println(performPostCall(apiKey,carbonMaster2000 ));
-    }
-
-    public static String  performPostCall(String requestURL, HashMap<String, String> postDataParams) throws MalformedURLException {
-
-        URL url;
-        String response = "";
-        try {
-            url=  new URL("https://app.trycarbonapi.com/api/carTravel");
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode=conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while ((line=br.readLine()) != null) {
-                    response+=line;
-                }
-            }
-            else {
-                response="";
-
-            }
-
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return response;
-    }
-
-    public static String getPostDataString(HashMap<String, String> postDataParameters) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry : postDataParameters.entrySet()) {
-            if(first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
-        return result.toString();
     }
 }
-
