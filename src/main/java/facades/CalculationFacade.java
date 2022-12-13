@@ -37,8 +37,7 @@ public class CalculationFacade {
         return null;
     }
 */
-    public JourneyDto calculateJourney(JourneyDto journeyDto) throws IOException {
-
+    public JourneyDto calculateJourney(JourneyDto journeyDto) throws Exception {
         Float newTotalEmission = 0f;
         Float newTotalDistance = 0f;
 
@@ -51,7 +50,7 @@ public class CalculationFacade {
 
         for(JourneyDto.TripDto tripDto : journeyDto.getTrips()){
 
-            HttpUtils.getEmission(tripDto);
+            tripDto = HttpUtils.sendPost(tripDto);
             journeyDto.setTotalEmission(journeyDto.getTotalEmission() + tripDto.getEmission());
             journeyDto.setTotalDistance(journeyDto.getTotalDistance() + tripDto.getDistance());
 
