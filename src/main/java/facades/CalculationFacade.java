@@ -51,8 +51,8 @@ public class CalculationFacade {
         for(JourneyDto.TripDto tripDto : journeyDto.getTrips()){
 
             tripDto = HttpUtils.sendPost(tripDto);
-            journeyDto.setTotalEmission(journeyDto.getTotalEmission() + tripDto.getEmission());
-            journeyDto.setTotalDistance(journeyDto.getTotalDistance() + tripDto.getDistance());
+            newTotalEmission += tripDto.getEmission();
+            newTotalDistance += tripDto.getDistance();
 
         }
 
