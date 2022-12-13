@@ -47,10 +47,11 @@ public class HttpUtils {
         RequestBody body = RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
 
-                .url("https://app.trycarbonapi.com/api/carTravel?distance=80&vehicle=SmallDieselCar")
+                .url("https://app.trycarbonapi.com/api/carTravel")
                 .method("POST", body)
                 .addHeader("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMjUzMGM4ZmIyMTdlYmJiYjg3ZjgwMDdjNDZjYTc5ODMwZjQxNzgzZDVhZTExNTUwMTA4ODdjMzY1NGRlMWNiNDI4YTc2ZGNmMjM3YWFlMGUiLCJpYXQiOjE2NjkzNzA5OTYsIm5iZiI6MTY2OTM3MDk5NiwiZXhwIjoxNzAwOTA2OTk2LCJzdWIiOiIyMzI0Iiwic2NvcGVzIjpbXX0.Ot63eEC6iCdCaea2TKX7DlMgvCpKGM8CfBuMSGivsTOUVerSUyQGUR-SA5e2-5ffN0ATmMavvFtK0f6SgCfETg")
                 .addHeader("Cookie", "Cookie_1=value")
+                .post(formBody)
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -87,10 +88,11 @@ public class HttpUtils {
     public static void main(String[] args) throws Exception {
 
         HttpUtils instance = new HttpUtils();
-
+        JourneyDto.TripDto.TransportationDto transportationDto = new JourneyDto.TripDto.TransportationDto(1, "SmallDieselCar");
+        JourneyDto.TripDto tripDto=  new JourneyDto.TripDto(1000f,transportationDto);
 
         System.out.println("Testing 1 - Send Http POST request");
-        instance.sendPost();
+        instance.sendPost(tripDto);
 
     }
 }
