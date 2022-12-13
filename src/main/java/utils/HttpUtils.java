@@ -58,9 +58,13 @@ public class HttpUtils {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
             // Get response body
-            System.out.println(response.body().string());
+            //System.out.println(response.body().string());
+            String str = response.body().string();
+            String emission = str.substring(str.lastIndexOf("n")+4,str.lastIndexOf("k"));
+            float floatValue = Float.parseFloat(emission);
+            System.out.println(floatValue);
 
-
+            tripDto.setEmission(floatValue);
 
         }
 
