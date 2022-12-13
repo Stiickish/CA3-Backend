@@ -97,6 +97,7 @@ public class JourneyFacade {
         Journey journey = new Journey(journeyDto);
         journey.setProfile(profile);
         journey.setJourneyType(type);
+
         for (Trip trip : journey.getTrips()) {
             Transportation transportation = em.find(Transportation.class, trip.getTransportation().getId());
             trip.setTransportation(transportation);
