@@ -4,7 +4,7 @@ import com.mysql.cj.log.Log;
 import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.*;
-import rest.CalculationResource;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
