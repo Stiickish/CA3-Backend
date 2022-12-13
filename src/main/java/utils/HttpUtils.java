@@ -85,7 +85,7 @@ public class HttpUtils {
 
     }
 
-    public static void main(String[] args) throws Exception {
+   /* public static void main(String[] args) throws Exception {
 
         HttpUtils instance = new HttpUtils();
         JourneyDto.TripDto.TransportationDto transportationDto = new JourneyDto.TripDto.TransportationDto(1, "SmallDieselCar");
@@ -94,5 +94,5 @@ public class HttpUtils {
         System.out.println("Testing 1 - Send Http POST request");
         instance.sendPost(tripDto);
 
-    }
+    }*/
 }
