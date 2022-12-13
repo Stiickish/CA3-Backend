@@ -80,6 +80,7 @@ public class JourneyRescource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateJourney(@PathParam("id") int id, String content) throws Exception {
+        System.out.println(content);
         JourneyDto journeyDtoFromJSON = GSON.fromJson(content, JourneyDto.class);
         journeyDtoFromJSON.setId(id);
         JourneyDto journeyDto = FACADE.updateJourney(journeyDtoFromJSON);

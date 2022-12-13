@@ -4,7 +4,7 @@ import com.mysql.cj.log.Log;
 import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.*;
-import rest.CalculationResource;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,7 +33,7 @@ public class JourneyFacade {
         try {
         calculationFacade.calculateJourney(journeyDto);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             System.out.println(e);
         }
@@ -64,17 +64,9 @@ public class JourneyFacade {
         EntityManager em = emf.createEntityManager();
         Journey journey = em.find(Journey.class, id);
 
-        System.out.println(journey);
-
         try {
             em.getTransaction().begin();
-
-            for(Trip trip : journey.getTrips())
-            {
-                em.remove(trip);
-            }
             journey.getTrips().clear();
-            System.out.println(journey.getTrips().size());
             em.remove(journey);
             em.getTransaction().commit();
         }
@@ -98,6 +90,8 @@ public class JourneyFacade {
         catch (IOException e)
         {
             System.out.println(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         Profile profile = em.find(Profile.class, journeyDto.getProfile().getId());
@@ -105,6 +99,13 @@ public class JourneyFacade {
         Journey journey = new Journey(journeyDto);
         journey.setProfile(profile);
         journey.setJourneyType(type);
+
+        for (Trip trip : journey.getTrips()) {
+            Transportation transportation = em.find(Transportation.class, trip.getTransportation().getId());
+            trip.setTransportation(transportation);
+            transportation.getTrips().add(trip);
+            trip.setJourney(journey);
+        }
 
         try
         {

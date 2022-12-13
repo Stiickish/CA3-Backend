@@ -1,7 +1,8 @@
-package rest;
+/*package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.JourneyDto;
 import facades.CalculationFacade;
 import utils.EMF_Creator;
 
@@ -31,7 +32,7 @@ public class CalculationResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getData(){
-        return calculationFacade.getAPIData();
+        return calculationFacade.calculateJourney(JourneyDto journeyDto);
     }
-}
+}*/
 
