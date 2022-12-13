@@ -39,7 +39,6 @@ public class ProfileFacade
             TypedQuery<Profile> query = em.createQuery("SELECT p FROM Profile p WHERE p.user.id = :userid", Profile.class);
             query.setParameter("userid", user.getId());
             profile = query.getSingleResult();
-            System.out.println(profile);
         } finally {
             em.close();
         }

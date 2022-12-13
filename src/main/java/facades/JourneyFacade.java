@@ -64,17 +64,9 @@ public class JourneyFacade {
         EntityManager em = emf.createEntityManager();
         Journey journey = em.find(Journey.class, id);
 
-        System.out.println(journey);
-
         try {
             em.getTransaction().begin();
-
-            for(Trip trip : journey.getTrips())
-            {
-                em.remove(trip);
-            }
             journey.getTrips().clear();
-            System.out.println(journey.getTrips().size());
             em.remove(journey);
             em.getTransaction().commit();
         }
