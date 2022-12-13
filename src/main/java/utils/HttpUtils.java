@@ -62,7 +62,7 @@ public class HttpUtils {
             String str = response.body().string();
             String emission = str.substring(str.lastIndexOf("n")+4,str.lastIndexOf("k"));
             float floatValue = Float.parseFloat(emission);
-            System.out.println(floatValue);
+
 
             tripDto.setEmission(floatValue);
 
